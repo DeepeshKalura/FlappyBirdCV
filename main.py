@@ -1,6 +1,8 @@
 import sys, time, random, pygame
 from collections import deque
 import cv2 as cv, mediapipe as mp
+from screeninfo import get_monitors
+
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_face_mesh = mp.solutions.face_mesh
@@ -8,7 +10,10 @@ drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 pygame.init()
 
 # Initialize required elements/environment
-VID_CAP = cv.VideoCapture(3)
+VID_CAP = cv.VideoCapture(0)
+screen_size = (get_monitors()[0].width, get_monitors()[0].height)
+VID_CAP.set(cv.CAP_PROP_FRAME_WIDTH, screen_size[0])
+VID_CAP.set(cv.CAP_PROP_FRAME_HEIGHT, screen_size[1])
 window_size = (VID_CAP.get(cv.CAP_PROP_FRAME_WIDTH), VID_CAP.get(cv.CAP_PROP_FRAME_HEIGHT)) # width by height
 screen = pygame.display.set_mode(window_size)
 
